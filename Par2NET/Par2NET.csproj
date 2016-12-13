@@ -79,7 +79,7 @@
     </ProjectReference>
     <ProjectReference Include="..\FastGaloisFields\FastGaloisFields\FastGaloisFields.csproj">
       <Project>{2D8D74BA-12FD-47BE-A84F-D9BE25D60AB5}</Project>
-      <Name>FastGaloisFields %28FastGaloisFields\FastGaloisFields%29</Name>
+      <Name>FastGaloisFields</Name>
     </ProjectReference>
     <ProjectReference Include="..\Par2NET.Interfaces\Par2NET.Interfaces.csproj">
       <Project>{FE5AAFEC-6C23-4179-8165-0720DD806688}</Project>
