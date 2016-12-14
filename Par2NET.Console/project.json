@@ -1,0 +1,28 @@
+{
+  "version": "1.0.0-*",
+  "buildOptions": {
+    "debugType": "portable",
+    "emitEntryPoint": true
+  },
+  "dependencies": {
+    "Par2NET": {
+      "target": "project",
+      "version": "1.0.0-*"
+    },
+    "Microsoft.Extensions.CommandLineUtils": "1.1.0"
+  },
+  "frameworks": {
+    "net451": {
+
+    },
+    "netcoreapp1.0": {
+      "dependencies": {
+        "Microsoft.NETCore.App": {
+          "type": "platform",
+          "version": "1.0.1"
+        }
+      },
+      "imports": "dnxcore50"
+    }
+  }
+}

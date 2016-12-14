@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 
 using Par2NET.Packets;
-using Par2NET.Interfaces;
+using Par2NET.Interface;
 using System.IO;
 using FastGaloisFields;
 using System.Threading.Tasks;

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Par2NET.Interfaces;
+using Par2NET.Interface;
 
 namespace Par2NET
 {
@@ -23,12 +23,26 @@ namespace Par2NET
             return ParResult.LogicError;
         }
 
-        public ParResult Process(Par2LibraryArguments args)
+        ParResult IParLibrary.Process<TArgs>(TArgs args)
         {
-            List<string> inputFiles = new List<string>(args.inputFiles);
-            List<string> recoveryFiles = new List<string>(args.recoveryFiles);
+            if (args == null)
+                throw new ArgumentNullException(nameof(args));
+            if(args is Par1LibraryArguments)
+            {
+                return this.Process((Par1LibraryArguments)(object)args);
+            }
+            else
+            {
+                throw new ArgumentException("Args type must be Par1LibArguments", nameof(args));
+            }
+        }
 
-            switch (args.action)
+        public ParResult Process(Par1LibraryArguments args)
+        {
+            List<string> inputFiles = new List<string>(args.InputFiles);
+            List<string> recoveryFiles = new List<string>(args.RecoveryFiles);
+
+            switch (args.Action)
             {
                 case ParAction.ParCreate:
                     return Create(ref inputFiles, ref recoveryFiles);

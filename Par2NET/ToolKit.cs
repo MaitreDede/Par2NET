@@ -54,7 +54,7 @@ namespace Par2NET
             Buffer.BlockCopy(array, start, buffer, 0, length);
 
             GCHandle handle = GCHandle.Alloc(buffer, GCHandleType.Pinned);
-            T temp = (T)Marshal.PtrToStructure(handle.AddrOfPinnedObject(), typeof(T));
+            T temp = Marshal.PtrToStructure<T>(handle.AddrOfPinnedObject());
             handle.Free();
             return temp;
         }

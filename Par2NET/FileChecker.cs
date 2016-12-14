@@ -5,7 +5,7 @@ using System.Text;
 using System.IO;
 using System.Security.Cryptography;
 using Par2NET.Packets;
-using Par2NET.Interfaces;
+using Par2NET.Interface;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Threading;

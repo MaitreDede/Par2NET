@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 using System.IO;
 using System.Globalization;
 using System.Security.Cryptography;
-using Par2NET.Interfaces;
+using Par2NET.Interface;
 using System.Threading;
 using Par2NET.Packets;
 using System.Reflection;
@@ -40,7 +40,7 @@ namespace Par2NET
 
         public static string ComputeTargetFileName(string filename)
         {
-            return Path.Combine(targetPath,Path.GetFileName(filename));
+            return Path.Combine(targetPath, Path.GetFileName(filename));
         }
 
         private Par1Library par1Library = null;
@@ -111,13 +111,13 @@ namespace Par2NET
             List<string> inputFiles = new List<string>(args.inputFiles);
             List<string> recoveryFiles = new List<string>(args.recoveryFiles);
 
-            if (args.version == ParVersion.Par1)
-                return Par1Library().Process(inputFiles, recoveryFiles, args.action);
+            if (args.Version == ParVersion.Par1)
+                return Par1Library().Process(inputFiles, recoveryFiles, args.Action);
 
-            if (args.action != ParAction.ParCreate)
+            if (args.Action != ParAction.ParCreate)
                 GetRecoveryFiles(recoveryFiles);
 
-            switch (args.action)
+            switch (args.Action)
             {
                 case ParAction.ParCreate:
                     return Create(ref inputFiles, ref recoveryFiles, args);
@@ -166,10 +166,10 @@ namespace Par2NET
         private ParResult Create(ref List<string> inputFiles, ref List<string> recoveryFiles, Par2LibraryArguments args)
         {
             // Initialize the base par2 filename if not set in the command line
-            if (args.par2filename == string.Empty)
+            if (string.IsNullOrEmpty(args.Par2filename))
             {
                 //args.par2filename = args.inputFiles[0] + ".par2";
-                args.par2filename = args.inputFiles[0];
+                args.Par2filename = args.inputFiles[0];
             }
 
             Par2RecoverySet recoverySet = new Par2RecoverySet(args.multithreadCPU, args.multithreadIO, args);
@@ -409,7 +409,7 @@ namespace Par2NET
                 else
                 {
                     //MT : OK
-                    using (Semaphore concurrencySemaphore = new Semaphore(0,4))
+                    using (Semaphore concurrencySemaphore = new Semaphore(0, 4))
                     {
                         List<Task> tasks = new List<Task>();
                         foreach (string recoveryFile in recoveryFiles)
@@ -431,7 +431,7 @@ namespace Par2NET
                         }
 
                         Task.WaitAll(tasks.ToArray());
-                    }                   
+                    }
                 }
             }
             catch (Exception ex)
@@ -472,11 +472,25 @@ namespace Par2NET
             // Check the verification results and report the results
             if (!setids[setid].CheckVerificationResults(false))
                 return ParResult.RepairNotPossible;
-            
+
             // TODO: Send return with
             // ParResult.Success || ParResult.RepairPossible || ParResult.RepairNotPossible
 
             return ParResult.Success;
+        }
+
+        ParResult IParLibrary.Process<TArgs>(TArgs args)
+        {
+            if (args == null)
+                throw new ArgumentNullException(nameof(args));
+            if (args is Par2LibraryArguments)
+            {
+                return this.Process((Par2LibraryArguments)(object)args);
+            }
+            else
+            {
+                throw new ArgumentException("Args type must be Par2LibraryArguments", nameof(args));
+            }
         }
     }
 }

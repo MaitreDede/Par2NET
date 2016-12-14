@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Par2NET.Packets;
-using Par2NET.Interfaces;
+using Par2NET.Interface;
 
 namespace Par2NET
 {

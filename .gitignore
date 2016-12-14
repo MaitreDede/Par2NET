@@ -13,3 +13,6 @@ _ReSharper.*
 ~$*
 Debug/
 Release/
+project.lock.json
+.vs/
+*.user

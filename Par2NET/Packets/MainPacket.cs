@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Par2NET.Interfaces;
+using Par2NET.Interface;
 using System.Security.Cryptography;
 using System.IO;
 
@@ -44,9 +44,9 @@ namespace Par2NET.Packets
             tmpPacket.header.type = Par2FileReader.mainpacket_type;
 
             tmpPacket.blocksize = (ulong)args.blocksize;
-            tmpPacket.recoverablefilecount = (uint)args.inputFiles.Length;
+            tmpPacket.recoverablefilecount = (uint)args.InputFiles.Length;
             tmpPacket.fileids = new List<byte[]>();
-            tmpPacket.header.length = (ulong)(tmpPacket.GetSize() + (16 * sizeof(byte) * args.inputFiles.Length));
+            tmpPacket.header.length = (ulong)(tmpPacket.GetSize() + (16 * sizeof(byte) * args.InputFiles.Length));
 
             // setid calculation and fileids insertion will occur in Par2RecoverySet.OpenSourceFiles method
 
